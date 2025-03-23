@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌻 Flores Amarillas - Proyecto Especial
 
-## Getting Started
+Un proyecto especial inspirado en el trend de TikTok "Flores Amarillas", combinado con elementos mágicos de Rapunzel y el encanto de las películas de Barbie.
 
-First, run the development server:
+## ✨ Características
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
+### 🎨 Elementos de Rapunzel
+- 🦎 Pascal cambiante de colores como guardián
+- 🍳 Sartén interactiva con mensajes especiales
+- ☀️ Sol brillante de Corona
+- 🐎 Maximus corriendo por la pantalla
+- 🏰 Elementos del Patito Modosito
+- 🚣‍♀️ Bote con linternas flotantes
+
+### 👗 Sección de Películas de Barbie
+- Barbie y las 12 Princesas Bailarinas
+- Barbie Rapunzel
+- Barbie y el Castillo de Diamantes
+- Barbie en el Lago de los Cisnes
+- Barbie y la Puerta Secreta
+- Barbie Escuela de Princesas
+
+### 💌 Sección Especial
+- Carta especial en construcción
+- Efectos mágicos y animaciones
+- Elementos interactivos
+
+## 🛠️ Tecnologías Utilizadas
+- Next.js
+- React
+- Framer Motion
+- Tailwind CSS
+- TypeScript
+
+## 🚀 Instalación
+
+1. Clona el repositorio:
+\`\`\`bash
+git clone https://github.com/Aldair2003/Flores-Amarillas-Domi.git
+\`\`\`
+
+2. Instala las dependencias:
+\`\`\`bash
+pnpm install
+\`\`\`
+
+3. Inicia el servidor de desarrollo:
+\`\`\`bash
 pnpm dev
-# or
-bun dev
-```
+\`\`\`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 💝 Dedicatoria Especial
+Este proyecto está creado con mucho amor y dedicación, inspirado en momentos especiales y memorias únicas.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🌟 Características por Venir
+- Más interacciones mágicas
+- Nuevas animaciones
+- Sorpresas especiales
+- Y mucho más...
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📝 Nota
+Este es un proyecto personal y especial. Cada elemento ha sido cuidadosamente seleccionado y diseñado para crear una experiencia única y memorable.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+Hecho con 💖 por [Aldair2003](https://github.com/Aldair2003)
