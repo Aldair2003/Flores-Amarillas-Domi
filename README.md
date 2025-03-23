@@ -1,4 +1,4 @@
-# 🌻 Flores Amarillas - Proyecto Especial
+# 🌻 Flores Amarillas - Para mi Novia
 
 Un proyecto especial inspirado en el trend de TikTok "Flores Amarillas", combinado con elementos mágicos de Rapunzel y el encanto de las películas de Barbie.
 
