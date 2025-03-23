@@ -1,103 +1,189 @@
-import Image from "next/image";
+'use client';
+
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import ReasonsGrid from '@/components/ReasonsGrid';
+import MusicPlayer from '@/components/MusicPlayer';
+import PhotoCarousel from '@/components/PhotoCarousel';
+import Counters from '@/components/Counters';
+import ReunionCounter from '@/components/ReunionCounter';
+import MagicalSection from '@/components/MagicalSection';
+import RapunzelElements from '@/components/RapunzelElements';
+import BarbieMovies from '@/components/BarbieMovies';
+import FutureLetterSection from '@/components/FutureLetterSection';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [activeSection, setActiveSection] = useState<'photos' | 'reasons' | 'counters' | 'reunion' | 'magical' | 'rapunzel' | 'barbie' | 'letter'>('photos');
+  const [mounted, setMounted] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  return (
+    <main className="min-h-screen relative overflow-hidden">
+      {/* Contenido principal */}
+      <div className="container mx-auto px-4 py-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          className="text-center mb-12 relative"
+        >
+          {/* Decoración de flores alrededor del título */}
+          <div className="absolute -top-10 -left-10 text-6xl floating">🌻</div>
+          <div className="absolute -top-10 -right-10 text-6xl floating" style={{ animationDelay: "0.5s" }}>🌻</div>
+          <div className="absolute -bottom-10 -left-10 text-6xl floating" style={{ animationDelay: "1s" }}>🌻</div>
+          <div className="absolute -bottom-10 -right-10 text-6xl floating" style={{ animationDelay: "1.5s" }}>🌻</div>
+
+          <motion.h1 
+            className="text-4xl md:text-6xl font-bold text-primary-800 mb-4 relative z-10"
+            animate={{ 
+              scale: [1, 1.02, 1],
+              rotate: [0, 1, -1, 0]
+            }}
+            transition={{ 
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            Para mi Domi 💛
+          </motion.h1>
+          <motion.p 
+            className="text-xl md:text-2xl text-primary-600 mb-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
           >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+            Con todo mi amor, de Aldair para Domi
+          </motion.p>
+
+          {/* Navegación entre secciones */}
+          <div className="flex flex-wrap justify-center gap-4 mb-8">
+            <motion.button
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+              className={`px-6 py-3 rounded-full transition-all shadow-lg shine-effect ${
+                activeSection === 'photos'
+                  ? 'gradient-love text-white'
+                  : 'glass-effect text-primary-700 hover:text-primary-800'
+              }`}
+              onClick={() => setActiveSection('photos')}
+            >
+              📸 Fotos
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+              className={`px-6 py-3 rounded-full transition-all shadow-lg shine-effect ${
+                activeSection === 'reasons'
+                  ? 'gradient-love text-white'
+                  : 'glass-effect text-primary-700 hover:text-primary-800'
+              }`}
+              onClick={() => setActiveSection('reasons')}
+            >
+              💝 100 Razones
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+              className={`px-6 py-3 rounded-full transition-all shadow-lg shine-effect ${
+                activeSection === 'counters'
+                  ? 'gradient-love text-white'
+                  : 'glass-effect text-primary-700 hover:text-primary-800'
+              }`}
+              onClick={() => setActiveSection('counters')}
+            >
+              ⏰ Nuestro Tiempo
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+              className={`px-6 py-3 rounded-full transition-all shadow-lg shine-effect ${
+                activeSection === 'reunion'
+                  ? 'gradient-love text-white'
+                  : 'glass-effect text-primary-700 hover:text-primary-800'
+              }`}
+              onClick={() => setActiveSection('reunion')}
+            >
+              🤗 Reencuentro
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+              className={`px-6 py-3 rounded-full transition-all shadow-lg shine-effect ${
+                activeSection === 'magical'
+                  ? 'gradient-love text-white'
+                  : 'glass-effect text-primary-700 hover:text-primary-800'
+              }`}
+              onClick={() => setActiveSection('magical')}
+            >
+              ✨ Mundo Mágico
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+              className={`px-6 py-3 rounded-full transition-all shadow-lg shine-effect ${
+                activeSection === 'rapunzel'
+                  ? 'gradient-love text-white'
+                  : 'glass-effect text-primary-700 hover:text-primary-800'
+              }`}
+              onClick={() => setActiveSection('rapunzel')}
+            >
+              👸 Rapunzel
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+              className={`px-6 py-3 rounded-full transition-all shadow-lg shine-effect ${
+                activeSection === 'barbie'
+                  ? 'gradient-love text-white'
+                  : 'glass-effect text-primary-700 hover:text-primary-800'
+              }`}
+              onClick={() => setActiveSection('barbie')}
+            >
+              💖 Barbie
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+              className={`px-6 py-3 rounded-full transition-all shadow-lg shine-effect ${
+                activeSection === 'letter'
+                  ? 'gradient-love text-white'
+                  : 'glass-effect text-primary-700 hover:text-primary-800'
+              }`}
+              onClick={() => setActiveSection('letter')}
+            >
+              💌 Carta Especial
+            </motion.button>
+          </div>
+        </motion.div>
+
+        {/* Contenido dinámico */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeSection}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.5 }}
+            className="relative"
+          >
+            {activeSection === 'photos' && <PhotoCarousel />}
+            {activeSection === 'reasons' && <ReasonsGrid />}
+            {activeSection === 'counters' && <Counters />}
+            {activeSection === 'reunion' && <ReunionCounter />}
+            {activeSection === 'magical' && <MagicalSection />}
+            {activeSection === 'rapunzel' && <RapunzelElements />}
+            {activeSection === 'barbie' && <BarbieMovies />}
+            {activeSection === 'letter' && <FutureLetterSection />}
+          </motion.div>
+        </AnimatePresence>
     </div>
+
+      {/* Reproductor de música */}
+      {mounted && <MusicPlayer />}
+    </main>
   );
 }
