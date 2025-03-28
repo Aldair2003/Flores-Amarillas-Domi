@@ -214,7 +214,7 @@ export default function PhotoCarousel() {
                 className="object-cover"
                 priority
                 quality={85}
-                onLoadingComplete={() => setIsLoading(false)}
+                onLoad={() => setIsLoading(false)}
               />
               
               {/* Descripción de la foto */}

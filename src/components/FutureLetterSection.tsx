@@ -1,9 +1,78 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { useState } from 'react';
+
+const letterContent = {
+  title: "Mi Amor ❤️",
+  content: `Feliz mes, mi amor. Hoy celebramos un mes más juntos, y sé que este día es diferente… especialmente delicado para ti. 
+Pero como las estrellas que guían a los viajeros en Star Wars, tú has sido mi luz desde que llegaste a mi vida, iluminando incluso los rincones más oscuros de mi corazón.
+
+Quiero decirte que te amo, sin medida ni condiciones. Desde ese primer momento en que te vi, cuando fui a verte, sentí que algo en mí cambió... 
+Mi mundo se transformó, como el castillo de Howl al encontrar a Sophie. 
+Cada instante contigo se ha convertido en un tesoro más valioso que el One Piece: 
+las risas compartidas, nuestras comidas, las películas, las series, todo. 
+Como Yor y Loid, descubriendo el amor entre aventuras y secretos, 
+contigo cada momento es único, es mágico, es nuestro.
+
+Las lágrimas y el frío te hicieron construir muros, 
+como la torre donde Rapunzel aguardaba en silencio, 
+pero nuestro amor… 
+Nuestro amor ha sido como aquellas luces flotantes en el cielo: 
+brillante, cálido, esperanzador. 
+Ha derretido cada muro, cada miedo escondido. 
+Y hoy, sin dudarlo, te ofrezco un amor real, 
+de un corazón sincero que late más fuerte solo por ti.
+
+Tu alma era viajera y solitaria, como Chihiro antes de hallar su camino, 
+y aunque parezca un atrevimiento, como cuando Coldplay susurra “Vi chispas” en medio de la oscuridad, 
+nuestros caminos se cruzaron, y de pronto… todo tuvo sentido. 
+“Mi corazón es tuyo, es a ti a quien me aferro”, susurra mi alma, 
+como Totoro llenando de magia la vida de las niñas, 
+tú llegaste y llenaste mi mundo de color y alegría. 
+Y aunque sé que no soy perfecto, te prometo: siempre cuidaré de ti.
+
+Lograste entender partes de mí que ni yo conocía, 
+como Naruto entendiendo el verdadero significado de nunca rendirse. 
+Preferiste escuchar mi silencio antes que forzar una sonrisa, 
+y gracias a ti, he aprendido a ser mejor. 
+Solo puedo darte las gracias… 
+por cada risa, cada abrazo, cada instante contigo.
+
+No me imagino un solo lugar sin ti, 
+porque estás conmigo siempre… 
+en mis mejores días, y también en los peores. 
+Con un abrazo tuyo, todo mejora. 
+Eres como el mar: profundo, paciente, que escucha sin juzgar. 
+Tú entiendes mi corazón, incluso cuando yo no sé cómo expresarlo.
+
+Te escribo esto con los ojos llenos de emoción… 
+Perdón si suena cursi, pero es lo que verdaderamente siento. 
+Lo que tenemos tú y yo no se encuentra en cualquier parte, 
+es una conexión única, especial… 
+como esa magia que une todos los mundos que amamos. 
+Y te juro que no la imagino con nadie más. 
+No me imagino mi vida sin ti.
+
+Te amo con todo lo que soy, mi princesa Leia, 
+mi compañera de aventuras, mi razón de sonreír. 
+Como las estrellas que guían a través de la galaxia, 
+tú iluminas cada paso que doy. 
+Gracias por ser tú… gracias por amarme.`,
+  signature: "Con todo mi amor, tu chuquinuni ❤️"
+};
 
 export default function FutureLetterSection() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [showSparkles, setShowSparkles] = useState(false);
+
+  const handleOpenLetter = () => {
+    setIsOpen(true);
+    setShowSparkles(true);
+    setTimeout(() => setShowSparkles(false), 2000);
+  };
+
   return (
     <div className="relative min-h-[500px] flex items-center justify-center p-4 md:p-8">
       {/* Fondo con gradiente */}
@@ -11,7 +80,7 @@ export default function FutureLetterSection() {
       
       {/* Contenedor principal */}
       <motion.div 
-        className="relative bg-white/80 backdrop-blur-md rounded-3xl p-6 md:p-8 max-w-2xl w-full shadow-xl"
+        className="relative bg-white/90 backdrop-blur-md rounded-3xl p-6 md:p-8 max-w-4xl w-full shadow-xl border border-pink-200"
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.5 }}
@@ -27,79 +96,153 @@ export default function FutureLetterSection() {
           />
         </div>
 
-        {/* Contenido de la carta */}
-        <motion.div 
-          className="text-center mt-16"
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.3 }}
-        >
-          <h2 className="text-3xl md:text-4xl font-bold text-primary-800 mb-4">
-            Carta Especial en Construcción 💌
-          </h2>
-          
-          <div className="relative my-8">
+        <AnimatePresence>
+          {!isOpen ? (
             <motion.div 
-              className="w-32 h-24 mx-auto bg-pink-100 rounded-lg shadow-md transform rotate-3 relative overflow-hidden"
-              whileHover={{ scale: 1.05, rotate: 0 }}
-              transition={{ duration: 0.3 }}
+              className="text-center mt-16"
+              exit={{ opacity: 0, scale: 0.8 }}
             >
-              {/* Sello de cera */}
-              <div className="absolute -right-4 -top-4 w-16 h-16 bg-red-400 rounded-full flex items-center justify-center transform rotate-12">
-                <span className="text-white text-2xl">💝</span>
-              </div>
+              <motion.div 
+                className="w-44 h-36 mx-auto bg-gradient-to-br from-pink-50 to-yellow-50 rounded-xl shadow-xl relative overflow-hidden cursor-pointer border-2 border-pink-200"
+                whileHover={{ scale: 1.05, rotate: 2 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleOpenLetter}
+              >
+                {/* Sello de cera */}
+                <div className="absolute -right-4 -top-4 w-20 h-20 bg-gradient-to-br from-red-400 to-pink-500 rounded-full flex items-center justify-center transform rotate-12 shadow-lg">
+                  <span className="text-white text-2xl">💝</span>
+                </div>
+                
+                {/* Líneas decorativas */}
+                <div className="absolute inset-4 border-2 border-dashed border-pink-300 rounded-lg">
+                  <motion.div
+                    className="absolute inset-0"
+                    animate={{
+                      background: [
+                        'linear-gradient(45deg, rgba(255,192,203,0.2) 0%, transparent 50%)',
+                        'linear-gradient(45deg, rgba(255,192,203,0.3) 50%, transparent 100%)',
+                        'linear-gradient(45deg, rgba(255,192,203,0.2) 100%, transparent 100%)'
+                      ]
+                    }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                  />
+                </div>
+
+                {/* Decoración de corazones */}
+                <motion.div
+                  className="absolute bottom-2 left-2 text-pink-400 text-lg"
+                  animate={{ scale: [1, 1.2, 1], rotate: [0, 10, 0] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  ❤️
+                </motion.div>
+              </motion.div>
+
+              <p className="text-lg md:text-xl text-primary-600 mt-6 mb-4 font-medium">
+                Pascal está cuidando un mensaje muy especial para ti... 
+              </p>
               
-              {/* Líneas decorativas */}
-              <div className="absolute inset-4 border-2 border-dashed border-pink-300 rounded" />
+              <p className="text-primary-500 italic">
+                Click para abrir la carta 💌
+              </p>
             </motion.div>
-
-            {/* Efectos brillantes */}
+          ) : (
             <motion.div
-              className="absolute inset-0"
-              animate={{
-                background: [
-                  'radial-gradient(circle, rgba(255,223,137,0.2) 0%, transparent 50%)',
-                  'radial-gradient(circle, rgba(255,223,137,0.4) 0%, transparent 50%)',
-                  'radial-gradient(circle, rgba(255,223,137,0.2) 0%, transparent 50%)'
-                ]
-              }}
-              transition={{ duration: 2, repeat: Infinity }}
-            />
-          </div>
-
-          <p className="text-lg md:text-xl text-primary-600 mb-6">
-            Pascal está cuidando un mensaje muy especial para ti... 
-          </p>
-          
-          <p className="text-primary-500 italic">
-            Pronto descubrirás lo que hay dentro... 🌟
-          </p>
-
-          {/* Decoraciones flotantes */}
-          {[...Array(5)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute text-3xl"
-              style={{
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-              }}
-              animate={{
-                y: [0, -20, 0],
-                rotate: [0, 360],
-                opacity: [0.3, 0.6, 0.3]
-              }}
-              transition={{
-                duration: 4,
-                delay: i * 0.2,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-16 relative"
             >
-              {['✨', '💫', '🌟', '💝', '💌'][i]}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-br from-pink-50/50 to-yellow-50/50 rounded-3xl"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+              />
+
+              <h2 className="text-4xl md:text-5xl font-bold text-primary-800 mb-8 text-center relative">
+                {letterContent.title}
+                <motion.div
+                  className="absolute -top-4 -right-4 text-3xl"
+                  animate={{ rotate: [0, 10, -10, 0], scale: [1, 1.1, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  ✨
+                </motion.div>
+              </h2>
+              
+              <div className="prose prose-lg max-w-none text-primary-700 whitespace-pre-line px-4 md:px-8">
+                {letterContent.content.split('\n\n').map((paragraph, index) => (
+                  <motion.p
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="mb-6 relative"
+                  >
+                    {paragraph}
+                    {index % 3 === 0 && (
+                      <motion.span
+                        className="absolute -left-6 text-pink-400 opacity-50"
+                        animate={{ scale: [1, 1.2, 1], rotate: [0, 10, 0] }}
+                        transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
+                      >
+                        ❤️
+                      </motion.span>
+                    )}
+                  </motion.p>
+                ))}
+              </div>
+
+              <motion.div
+                className="text-right mt-12 relative"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1 }}
+              >
+                <p className="text-xl text-primary-800 font-bold italic">
+                  {letterContent.signature}
+                </p>
+                <motion.div
+                  className="absolute -bottom-4 right-0 text-2xl"
+                  animate={{ y: [0, -5, 0], rotate: [0, 5, 0] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  💝
+                </motion.div>
+              </motion.div>
             </motion.div>
-          ))}
-        </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Efectos de chispas */}
+        <AnimatePresence>
+          {showSparkles && (
+            <>
+              {[...Array(30)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-2 h-2 bg-yellow-300 rounded-full"
+                  initial={{
+                    opacity: 1,
+                    x: "50%",
+                    y: "50%"
+                  }}
+                  animate={{
+                    opacity: 0,
+                    x: `${50 + (Math.random() * 120 - 60)}%`,
+                    y: `${50 + (Math.random() * 120 - 60)}%`,
+                    scale: 0
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    delay: i * 0.03
+                  }}
+                  exit={{ opacity: 0 }}
+                />
+              ))}
+            </>
+          )}
+        </AnimatePresence>
       </motion.div>
     </div>
   );

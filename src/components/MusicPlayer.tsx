@@ -1,11 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import dynamic from 'next/dynamic';
 import Image from 'next/image';
-
-const ReactPlayer = dynamic(() => import('react-player/youtube'), { ssr: false });
 
 interface Song {
   title: string;
@@ -18,25 +15,25 @@ const playlist: Song[] = [
   {
     title: "M.A.I",
     artist: "Milo J",
-    url: "https://www.youtube.com/watch?v=SrQFSwAyteg",
+    url: "/music/mai.mp3",
     thumbnail: "https://i.ytimg.com/vi/SrQFSwAyteg/hqdefault.jpg"
   },
   {
     title: "X20X",
     artist: "Feid",
-    url: "https://www.youtube.com/watch?v=PDNAkgpNOCI",
+    url: "/music/X20X.mp3",
     thumbnail: "https://i.ytimg.com/vi/PDNAkgpNOCI/hqdefault.jpg"
   },
   {
     title: "Sparks",
     artist: "Coldplay",
-    url: "https://www.youtube.com/watch?v=Ar48yzjn1PE",
+    url: "/music/sparks.mp3",
     thumbnail: "https://i.ytimg.com/vi/Ar48yzjn1PE/hqdefault.jpg"
   },
   {
     title: "Sanctuary",
     artist: "Joji",
-    url: "https://www.youtube.com/watch?v=wdl13YtcLRk",
+    url: "/music/sanctuary.mp3",
     thumbnail: "https://i.ytimg.com/vi/wdl13YtcLRk/hqdefault.jpg"
   }
 ];
@@ -89,8 +86,28 @@ export default function MusicPlayer() {
   const [volume, setVolume] = useState(0.5);
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const [isPlaylistVisible, setIsPlaylistVisible] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   const currentSong = playlist[currentSongIndex];
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  }, [volume]);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.play().catch(error => {
+          console.error('Error al reproducir:', error);
+          setIsPlaying(false);
+        });
+      } else {
+        audioRef.current.pause();
+      }
+    }
+  }, [isPlaying, currentSong.url]);
 
   const nextSong = () => {
     setCurrentSongIndex((prev) => (prev + 1) % playlist.length);
@@ -130,6 +147,7 @@ export default function MusicPlayer() {
                   src={currentSong.thumbnail}
                   alt={currentSong.title}
                   fill
+                  sizes="(max-width: 640px) 280px, 320px"
                   className="object-cover transition-transform group-hover:scale-110"
                 />
                 <motion.div
@@ -279,23 +297,11 @@ export default function MusicPlayer() {
       </AnimatePresence>
 
       <div className="hidden">
-        <ReactPlayer
-          url={currentSong.url}
-          playing={isPlaying}
-          volume={volume}
-          width="0"
-          height="0"
+        <audio
+          ref={audioRef}
+          src={currentSong.url}
           onEnded={nextSong}
           onError={(e) => console.error('Error en la reproducción:', e)}
-          config={{
-            playerVars: {
-              controls: 0,
-              modestbranding: 1,
-              showinfo: 0,
-              rel: 0,
-              playsinline: 1
-            }
-          }}
         />
       </div>
     </motion.div>
