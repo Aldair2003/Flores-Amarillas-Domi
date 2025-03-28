@@ -26,9 +26,9 @@ Y hoy, sin dudarlo, te ofrezco un amor real,
 de un corazón sincero que late más fuerte solo por ti.
 
 Tu alma era viajera y solitaria, como Chihiro antes de hallar su camino, 
-y aunque parezca un atrevimiento, como cuando Coldplay susurra “Vi chispas” en medio de la oscuridad, 
+y aunque parezca un atrevimiento, como cuando Coldplay susurra "Vi chispas" en medio de la oscuridad, 
 nuestros caminos se cruzaron, y de pronto… todo tuvo sentido. 
-“Mi corazón es tuyo, es a ti a quien me aferro”, susurra mi alma, 
+"Mi corazón es tuyo, es a ti a quien me aferro", susurra mi alma, 
 como Totoro llenando de magia la vida de las niñas, 
 tú llegaste y llenaste mi mundo de color y alegría. 
 Y aunque sé que no soy perfecto, te prometo: siempre cuidaré de ti.
@@ -60,12 +60,14 @@ mi compañera de aventuras, mi razón de sonreír.
 Como las estrellas que guían a través de la galaxia, 
 tú iluminas cada paso que doy. 
 Gracias por ser tú… gracias por amarme.`,
-  signature: "Con todo mi amor, tu chuquinuni ❤️"
+  signature: "Con todo mi amor, tu chuquinuni ❤️",
+  specialMessage: "Como en las películas de Studio Ghibli, nuestro amor es mágico, lleno de aventuras y momentos inolvidables. Cada día contigo es como vivir en un hermoso anime, donde los sueños se hacen realidad y el amor verdadero existe. Tú eres mi Chihiro, mi Sophie, mi razón para creer en la magia del amor. 🌸✨"
 };
 
 export default function FutureLetterSection() {
   const [isOpen, setIsOpen] = useState(false);
   const [showSparkles, setShowSparkles] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const handleOpenLetter = () => {
     setIsOpen(true);
@@ -199,9 +201,110 @@ export default function FutureLetterSection() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1 }}
               >
-                <p className="text-xl text-primary-800 font-bold italic">
-                  {letterContent.signature}
-                </p>
+                <motion.div 
+                  className="inline-flex flex-col sm:flex-row items-center justify-end gap-2 cursor-pointer group relative"
+                  onClick={() => setShowModal(true)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <motion.span
+                    className="text-sm text-primary-600 flex items-center gap-1 mb-2 sm:mb-0"
+                    animate={{ 
+                      scale: [1, 1.05, 1],
+                      opacity: [0.7, 1, 0.7]
+                    }}
+                    transition={{ 
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    👆 Click aquí para ver algo especial ✨
+                  </motion.span>
+                  <motion.p className="text-xl text-primary-800 font-bold italic group-hover:text-primary-600 transition-colors">
+                    {letterContent.signature}
+                  </motion.p>
+                </motion.div>
+
+                {/* Modal de imagen especial */}
+                <AnimatePresence>
+                  {showModal && (
+                    <>
+                      {/* Overlay mejorado */}
+                      <motion.div
+                        className="fixed inset-0 bg-black/60 z-[9998] backdrop-blur-sm"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setShowModal(false)}
+                      />
+                      
+                      {/* Modal centrado desde abajo */}
+                      <motion.div
+                        className="fixed bottom-[15vh] left-1/2 -translate-x-1/2 z-[9999] w-[95vw] md:w-[90vw] max-w-5xl bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border-2 border-pink-200 p-4 md:p-6"
+                        initial={{ y: "100%", opacity: 0, x: "-50%" }}
+                        animate={{ y: "0%", opacity: 1, x: "-50%" }}
+                        exit={{ y: "100%", opacity: 0, x: "-50%" }}
+                        transition={{ type: "spring", damping: 20 }}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        {/* Botón de cerrar */}
+                        <motion.button
+                          className="absolute -top-3 -right-3 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-primary-600 hover:text-primary-800 border-2 border-pink-200 z-[10000]"
+                          whileHover={{ scale: 1.1, rotate: 90 }}
+                          whileTap={{ scale: 0.9 }}
+                          onClick={() => setShowModal(false)}
+                        >
+                          ✕
+                        </motion.button>
+
+                        {/* Contenedor principal del contenido */}
+                        <div className="flex flex-col items-center justify-center gap-4">
+                          {/* Contenedor de la imagen optimizado */}
+                          <div className="relative w-full h-[45vh] md:h-[55vh] lg:h-[65vh]">
+                            <Image
+                              src="/iconweb.webp"
+                              alt="Nosotros estilo Ghibli"
+                              fill
+                              className="object-contain"
+                              sizes="(max-width: 768px) 95vw, (max-width: 1200px) 90vw, 85vw"
+                              priority
+                            />
+                          </div>
+
+                          {/* Mensaje especial mejorado */}
+                          <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.3 }}
+                            className="w-full bg-white/80 backdrop-blur-sm rounded-xl shadow-inner p-3 md:p-4"
+                          >
+                            <p className="text-sm md:text-base lg:text-lg text-primary-700 italic leading-relaxed text-center">
+                              {letterContent.specialMessage}
+                            </p>
+                          </motion.div>
+                        </div>
+
+                        {/* Decoraciones */}
+                        <motion.div
+                          className="absolute -top-4 -left-4 text-3xl md:text-4xl pointer-events-none"
+                          animate={{ rotate: [0, 10, -10, 0], scale: [1, 1.1, 1] }}
+                          transition={{ duration: 3, repeat: Infinity }}
+                        >
+                          🌸
+                        </motion.div>
+                        <motion.div
+                          className="absolute -bottom-4 -right-4 text-3xl md:text-4xl pointer-events-none"
+                          animate={{ rotate: [0, -10, 10, 0], scale: [1, 1.1, 1] }}
+                          transition={{ duration: 3, repeat: Infinity }}
+                        >
+                          ✨
+                        </motion.div>
+                      </motion.div>
+                    </>
+                  )}
+                </AnimatePresence>
+
                 <motion.div
                   className="absolute -bottom-4 right-0 text-2xl"
                   animate={{ y: [0, -5, 0], rotate: [0, 5, 0] }}
