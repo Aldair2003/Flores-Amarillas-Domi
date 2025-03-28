@@ -15,28 +15,29 @@ const playlist: Song[] = [
   {
     title: "M.A.I",
     artist: "Milo J",
-    url: "/music/mai.mp3",
+    url: "https://res.cloudinary.com/dcgjr4v71/video/upload/v1743197976/Music/vfcolvi5gyqaavewqtgn.mp3",
     thumbnail: "https://i.ytimg.com/vi/SrQFSwAyteg/hqdefault.jpg"
   },
   {
     title: "X20X",
     artist: "Feid",
-    url: "/music/X20X.mp3",
+    url: "https://res.cloudinary.com/dcgjr4v71/video/upload/v1743197973/Music/lvvfrwflazqeeb5tlu5k.mp3",
     thumbnail: "https://i.ytimg.com/vi/PDNAkgpNOCI/hqdefault.jpg"
   },
   {
     title: "Sparks",
     artist: "Coldplay",
-    url: "/music/sparks.mp3",
+    url: "https://res.cloudinary.com/dcgjr4v71/video/upload/v1743197977/Music/ytesfcqrkods71yacbxn.mp3",
     thumbnail: "https://i.ytimg.com/vi/Ar48yzjn1PE/hqdefault.jpg"
   },
   {
     title: "Sanctuary",
     artist: "Joji",
-    url: "/music/sanctuary.mp3",
+    url: "https://res.cloudinary.com/dcgjr4v71/video/upload/v1743197969/Music/urrwrmkq8f8gr7y0moro.mp3",
     thumbnail: "https://i.ytimg.com/vi/wdl13YtcLRk/hqdefault.jpg"
   }
 ];
+
 
 const containerVariants = {
   hidden: { y: 100, opacity: 0 },
@@ -86,6 +87,7 @@ export default function MusicPlayer() {
   const [volume, setVolume] = useState(0.5);
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const [isPlaylistVisible, setIsPlaylistVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const currentSong = playlist[currentSongIndex];
@@ -97,16 +99,25 @@ export default function MusicPlayer() {
   }, [volume]);
 
   useEffect(() => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.play().catch(error => {
+    const playAudio = async () => {
+      if (audioRef.current) {
+        try {
+          setIsLoading(true);
+          if (isPlaying) {
+            await audioRef.current.play();
+          } else {
+            audioRef.current.pause();
+          }
+        } catch (error) {
           console.error('Error al reproducir:', error);
           setIsPlaying(false);
-        });
-      } else {
-        audioRef.current.pause();
+        } finally {
+          setIsLoading(false);
+        }
       }
-    }
+    };
+
+    playAudio();
   }, [isPlaying, currentSong.url]);
 
   const nextSong = () => {
@@ -115,6 +126,12 @@ export default function MusicPlayer() {
 
   const previousSong = () => {
     setCurrentSongIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
+  };
+
+  const handlePlayPause = () => {
+    if (!isLoading) {
+      setIsPlaying(!isPlaying);
+    }
   };
 
   return (
@@ -182,18 +199,20 @@ export default function MusicPlayer() {
                   whileTap={{ scale: 0.9 }}
                   onClick={previousSong}
                   className="w-10 h-10 flex items-center justify-center bg-white/80 rounded-full shadow-lg text-primary-600 hover:text-primary-800 transition-all hover:bg-white"
+                  disabled={isLoading}
                 >
                   <span className="text-xl">⏮️</span>
                 </motion.button>
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
-                  animate={isPlaying ? { rotate: [0, 360] } : {}}
-                  transition={isPlaying ? { duration: 4, repeat: Infinity, ease: "linear" } : {}}
-                  onClick={() => setIsPlaying(!isPlaying)}
+                  animate={isPlaying && !isLoading ? { rotate: [0, 360] } : {}}
+                  transition={isPlaying && !isLoading ? { duration: 4, repeat: Infinity, ease: "linear" } : {}}
+                  onClick={handlePlayPause}
                   className="w-12 h-12 flex items-center justify-center bg-primary-500 rounded-full shadow-lg text-white hover:bg-primary-600 transition-all"
+                  disabled={isLoading}
                 >
-                  <span className="text-2xl">{isPlaying ? '⏸️' : '▶️'}</span>
+                  <span className="text-2xl">{isLoading ? '⌛' : isPlaying ? '⏸️' : '▶️'}</span>
                 </motion.button>
                 <motion.button
                   whileHover={{ scale: 1.1, rotate: 10 }}
@@ -301,7 +320,12 @@ export default function MusicPlayer() {
           ref={audioRef}
           src={currentSong.url}
           onEnded={nextSong}
-          onError={(e) => console.error('Error en la reproducción:', e)}
+          onError={(e) => {
+            console.error('Error en la reproducción:', e);
+            setIsPlaying(false);
+            setIsLoading(false);
+          }}
+          preload="auto"
         />
       </div>
     </motion.div>
