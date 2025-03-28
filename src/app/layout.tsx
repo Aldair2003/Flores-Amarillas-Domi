@@ -2,6 +2,14 @@
 export const metadata = {
   title: "Para mi Domi 💛",
   description: "Con todo mi amor para Domi",
+  icons: {
+    icon: [
+      {
+        url: '/iconweb.webp',
+        type: 'image/webp',
+      }
+    ]
+  }
 };
 
 import { Inter } from "next/font/google";
